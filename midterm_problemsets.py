@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-t.speed(0)
+
 
 def divisorsum(n):
     div_sum=0
@@ -78,6 +78,7 @@ def isprime(n):
 
 def prime_lists():
     prime_list = [i for i in range (2,101) if isprime(i) is True]
+    # print(prime_list)
     return(prime_list)
 
 def gc():
@@ -100,8 +101,8 @@ def pair_prime_finder(n):
 
 # question 2
 # print(isprime(int(input('number is either prime or not prime: '))))
-# prime_lists()
-# gc()
+#prime_lists()
+#gc()
 # pair_prime_finder(int(input('pairs for the number: ')))
 
 def findloner_without_xor():
@@ -196,9 +197,12 @@ def happy_list_function(n):
                         test = True
     # print(f'last digit: {list[x]}')
     if list[-1] == '1':
-        # print(f'for {n}, last calculated number {next_num}')
+        print(list)
+        print(f'for {n}, last calculated number {next_num}')
         return True
     else:
+        print(list)
+        print(f'for {n}, last calculated number {next_num}')
         return False
 
 def happpy_numbers_within(upper):
@@ -220,19 +224,22 @@ def plt_happy_num():
 
     x=happpy_numbers_within(1000)
     print(x)
+    ally=[v for v in range(1000)]
+    allx=[1 for v in range(1000)]
     plt.plot(x,y,'o')
+    plt.plot(ally,allx,'-')
     plt.show()
     
     
     
     
 ## problem 5
-# happy_list_function(input('potential happy list for: '))
-# happpy_numbers_within(int(input('find the number of happy nums under: ')))
+#happy_list_function(input('potential happy list for: '))
+#happpy_numbers_within(int(input('find the number of happy nums under: ')))
 ''' comment for happiness rate
 below 100: 19
 below 1000: 142
-below 100000: 14376
+below 10^6: 143760
 '''
 # plt_happy_num()
 
@@ -240,6 +247,7 @@ below 100000: 14376
 def rand_triangles():
     
     t.color('blue')
+    t.speed(0)
     for x in range(6):
         heading=r.randint(0,360)
         side=r.randint(1,200)
@@ -323,7 +331,7 @@ def polygons(points):
             
 
 
-
+t.speed(0)
 
 # rand_triangles()
 # rand_squares()

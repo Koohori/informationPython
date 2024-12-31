@@ -84,4 +84,4 @@ def finding_pi(iterations):
 #plotting_graph()
 #bisection_method()
 #graphing_iteration()
-finding_pi(9000)
+finding_pi(90000)
