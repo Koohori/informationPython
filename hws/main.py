@@ -1,4 +1,4 @@
-import random as r
+'''import random as r
 import turtle as t
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,6 +18,17 @@ def pi_monte_caro():
         print(result)
     print(result)
 
+'''
+
+# pi_monte_caro()
 
 
-pi_monte_caro()
+q=1234567890
+now=True
+for n in range(1,10):
+    print(n)
+    if q%n!=0:
+        now=False
+
+if now==True:
+    print(q,now)

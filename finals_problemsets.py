@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from timeit import default_timer as timer
 from datetime import timedelta
+import itertools as it
+
+### Problem 1
 
 def natural_log_equation(x_value):
     y_value=(x_value)**3+np.log(x_value)
@@ -45,15 +48,17 @@ def bisection_method():
 def newton_method():
     newton_x=[]
     newton_y=[]
-    new = 2
+    new = 1
     delta=abs(natural_log_equation(new))
     domain=1
-    while delta > 0.0001:
+    newton_x.append(domain)
+    newton_y.append(delta)
+    while delta > 0.00001:
         new=new-(natural_log_equation(new)/equation_derivative(new))
         # print(f'delta; {delta}, newest value; {new}')
         delta = abs(natural_log_equation(new))
-        newton_x.append(domain)
         domain+=1
+        newton_x.append(domain)
         newton_y.append(delta)
     return newton_x,newton_y
         
@@ -67,8 +72,8 @@ def comparison():
     plt.legend()
     plt.show()
 
-### Problem 1
-graph_only()
+
+#graph_only()
 #bisection_method()
 #newton_method()
 #comparison()
@@ -90,8 +95,8 @@ def alphabet_occurance():
                     count[character]+=1
                     
     plt.bar(alphabet, count, width=1.0)
+    # plt.show()
     return count
-    # plt.show()        
         
 
 def entropy():
@@ -107,6 +112,7 @@ def entropy():
         individual_entropy=per_occurance*np.emath.logn(26,per_occurance)*-1
         total_entropy+=individual_entropy
         probability_list.append(individual_entropy)
+    # print(total_entropy/26)
     return probability_list
 
 def distribution():
@@ -139,11 +145,13 @@ def distribution():
 
 
 
-### Problem 2
-#alphabet_occurance()
-#entropy()
-#distribution()
 
+# alphabet_occurance()
+# entropy()
+# distribution()
+
+
+## Problem 3
 def graphing_monte(dots):
     within=0
     for i in range(dots):
@@ -158,16 +166,197 @@ def graphing_monte(dots):
     print(within)
     area=within/dots
     print(f'estimated area {area}')
+    plt.show()
 
 ## with 10000, got 0.6131
 
 
 
 
-## Problem 3
+
 # graphing_monte(10000)
 
 
 
 
 # problem 4
+
+def polygon_figure():
+    points=int(input('number of points: '))
+    skipped=int(input('connects number of points: '))
+    t.speed(6)
+    size=900
+    inner_degree=360/points
+    segment = size/points
+    
+    ## center cicle
+    t.pd()
+    center_radius=2
+    t.teleport(0,-center_radius)
+    t.seth(0)
+    t.color('red')
+    t.circle(center_radius)
+    
+    
+    ## go to drawing outer location
+    t.teleport((segment/2),(-size/np.pi)/2)
+    t.seth(180)
+    location_x=[]
+    location_y=[]
+    count=0
+    for i in range(points):
+        t.pu()
+        t.color('black')
+        location_x.append(t.xcor())
+        location_y.append(t.ycor())
+        t.fd(segment)
+        t.right(inner_degree)
+    
+    x_extended=location_x*points
+    y_extended=location_y*points
+    
+    for i in range(points+1):
+        t.pd()
+        t.goto(x_extended[count],y_extended[count])
+        count+=skipped
+    
+    t.write(f'n= {points}, k={skipped}')
+
+    
+    t.done()
+
+
+# polygon_figure()
+
+## problem 5
+
+
+
+def koch_snowflake(x_cord,y_cord):
+    t.speed(9)
+    n=int(input('level of n: '))
+    ## full straight line is 200
+    full=400
+    h=(1-0.5**2)**(1/2)
+    # x_cord=[-full/2,full/2]
+    # y_cord=[0,0]
+    count=1
+    t.teleport(x_cord[0],y_cord[0])
+    ## function for in between functions
+    for i in range(n):
+        if i==n-1:
+            t.pd()
+        else:
+            t.pu()
+        new_x=[]
+        new_y=[]
+
+        def add_pos():
+            new_x.append(t.xcor())
+            new_y.append(t.ycor())
+
+        t.teleport(x_cord[0],y_cord[0])
+        for i in range(len(x_cord)-1):
+            segment=round((full/(3**count)), 4)
+            add_pos()
+            t.seth(t.towards(x_cord[i+1],y_cord[i+1]))
+            t.fd(segment)
+            add_pos()
+            t.left(60)
+            t.fd(segment)
+            add_pos()
+            t.right(120)
+            t.fd(segment)
+            add_pos()
+            t.left(60)
+            t.fd(segment)
+        add_pos()
+        x_cord=new_x
+        y_cord=new_y
+        count+=1
+        print(x_cord, y_cord)
+    t.done()
+    
+    
+def star_koch():
+    bottom=(400**2-200**2)**(1/2)
+    star_x=[-200,200,0,-200]
+    star_y=[0,0,-bottom,0]
+    koch_snowflake(star_x,star_y)
+
+
+
+
+
+
+#koch_snowflake()
+#star_koch()
+
+## Problem 6
+f=open("all_pandigital.txt", "r")
+all_pan=f.read().splitlines()
+
+def small_pan():
+    
+
+    '''# Generate all permutations of the digits 0 to 9
+    numbers = "0123456789"
+    possible = [''.join(i) for i in it.permutations(numbers)]
+    print(f'done generating overallist {len(possible)} ')
+
+    f = open("all_pandigital.txt", "w")
+
+    for x in possible:
+        if x[0]!='0':
+            print(x, file=f)
+        
+    f.close'''
+
+    print(all_pan[:5])
+
+def divisible():
+    f = open("divisible.txt", "w")
+    passed=[]
+    for i in all_pan:
+        now=True
+        q=int(i)
+        for n in range(1,10):
+            if q%n!=0:
+                now=False
+                break
+
+        if now==True:
+            print(i, file=f)
+        
+    f.close
+
+def square():
+    square=[]
+    for pan in all_pan:
+        root=(int(pan)**0.5)
+        if root%1==0:
+            square.append(pan)
+            print(f'found {pan}, root {root}')
+
+    print(len(square))
+
+
+def square_fancy():
+    square=[]
+    for num in range(30000, 100000):
+        sq=num**2
+        now=True
+        for div in range(0,10):
+            if str(div) not in str(sq):
+                now=False
+                break
+        if now==True:
+            square.append(num**2)
+    print(len(square))
+
+
+
+#small_pan()
+#divisible()
+#square()
+square_fancy()
